@@ -10,15 +10,153 @@
   --table-bg: #f8f9fa;
   --table-border: #e0e0e0;
   --text-dark: #333;
+
+    /* Mapping Bootstrap Success to your brand color */
+    --bs-success: var(--comsa-green);
+    
+    /* Custom subtle background tint for success badges/alerts */
+    --bs-success-subtle: rgba(9, 176, 3, 0.1); 
 }
 
+/* ---  Success Button (.btn-success) --- */
+.btn-success {
+    background-color: var(--comsa-green) !important;
+    border-color: var(--comsa-green) !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+.btn-success:hover,
+.btn-success:focus {
+    /* Darken slightly on hover for visual feedback */
+    background-color: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+}
+
+/* --- 2. Outline Success Button (.btn-outline-success) --- */
+.btn-outline-success {
+    /* Text and border are Bright Green */
+    color: var(--comsa-green) !important;
+    border-color: var(--comsa-green) !important;
+    --bs-btn-color: var(--comsa-green);
+    --bs-btn-border-color: var(--comsa-green);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--comsa-green);
+    --bs-btn-hover-border-color: var(--comsa-green);
+}
+
+/* --- Success Text (.text-success) --- */
+.text-success {
+    /* Used for text links, table text, and any success-related label */
+    color: var(--comsa-green) !important;
+}
+
+/* --- Success Background (.bg-success) --- */
+.bg-success {
+    /* Used for solid background elements like jumbotrons or colored headers */
+    background-color: var(--comsa-green) !important;
+}
+
+/* --- Success Background Tints and Subtles (Badges/Alerts) --- */
+
+/* Badge/Alert text color on light BG (e.g., in status badges) */
+.bg-success-subtle {
+    /* Use the light custom color defined in :root */
+    background-color: var(--bs-success-subtle) !important;
+}
+
+/* Alert text color */
+.alert-success {
+    color: var(--comsa-green); /* Ensure alert text is the right shade */
+    background-color: var(--bs-success-subtle);
+    border-color: var(--comsa-green);
+}
+
+/* Success Table Row */
+.table-success {
+    /* Ensures rows use a very light success shade */
+    --bs-table-bg: var(--bs-success-subtle);
+    --bs-table-accent-bg: var(--bs-success-subtle);
+}
+
+/* --- 1. Primary Button (.btn-primary) --- */
+.btn-primary {
+    /* Set to Darkest Green */
+    background-color: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+    /* Slightly lighten or use a complementary shade on hover for visual depth */
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* --- 2. Outline Primary Button (.btn-outline-primary) --- */
+.btn-outline-primary {
+    /* Text and border are Darkest Green */
+    color: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+    --bs-btn-color: var(--primary-dark);
+    --bs-btn-border-color: var(--primary-dark);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--primary-dark);
+    --bs-btn-hover-border-color: var(--primary-dark);
+}
+
+/* --- 3. Primary Text (.text-primary) --- */
+.text-primary {
+    /* Used for icons, text links, and any primary labels */
+    color: var(--primary-dark) !important;
+}
+
+/* --- 4. Primary Background (.bg-primary) --- */
+.bg-primary {
+    /* Used for solid background elements like colored headers */
+    background-color: var(--primary-dark) !important;
+}
+
+/* --- 5. Primary Background Tints and Subtles (Badges/Alerts) --- */
+
+/* Badge/Alert text color on light BG */
+.bg-primary-subtle {
+    /* Use the light custom color defined in :root */
+    background-color: var(--bs-primary-subtle) !important;
+}
+
+/* Alert text color */
+.alert-primary {
+    color: var(--primary-dark); 
+    background-color: var(--bs-primary-subtle);
+    border-color: var(--primary-dark);
+}
+
+.form-check-input:checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+
+/* Primary Table Row */
+.table-primary {
+    /* Ensures rows use a very light primary shade */
+    --bs-table-bg: var(--bs-primary-subtle);
+    --bs-table-accent-bg: var(--bs-primary-subtle);
+}
 *{
     font-family: 'Rubik', sans-serif;
 }
+
+body{
+    background-color: #f5f7fa;
+}
+
 .btn-comsa {
-    background-color: #09b003;
+    background: linear-gradient(135deg, var(--accent-color) 0%, #007a00 100%);
     color: #ffffff;
     font-weight: bold;
+    border: none;
 }
 
 .btn-comsa:hover{
@@ -33,8 +171,9 @@
 
 
 .btn-active {
-    background-color: #09b003;
+  background: linear-gradient(135deg, var(--accent-color) 0%, #007a00 100%);
   color: #fff !important;
+  border: none;
 }
 
 .btn-light:hover {
@@ -134,4 +273,14 @@
 .add-btn:hover {
   background-color: var(--comsa-green-dark);
   transform: translateY(-2px);
+}
+
+.btn-light{
+  background-color: #f5f7fa;
+}
+
+.btn-secondary{
+  background-color: #f5f7fa;
+  color: var(--text-dark);
+  border: none;
 }

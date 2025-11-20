@@ -1,5 +1,5 @@
 <?php
-include('config.php');
+include('functions/config.php');
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['initiated'] = true;
 
             if ($user['is_admin']) {
-                header("Location: admin_dashboard.php");
+                header("Location: admin/admin_dashboard.php");
             } else {
                 header("Location: dashboard.php");
             }
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="card shadow-lg border-0 p-4" style="width: 100%; max-width: 400px; border-radius: 16px;">
     <div class="card-body">
     <div class="text-center mb-4">
-        <img src="img/secondary_logo.png" alt="COMSA Logo" style="width: 200px;">
+        <img src="img/tracker-logo2.png" alt="COMSA Logo" style="width: 200px;">
     </div>
       <form method="POST" action="">
         <div class="mb-3">

@@ -129,7 +129,7 @@ if (!isset($_SESSION['student_number']) || $_SESSION['is_admin'] != 1) {
             <!-- Sidebar Heading now includes the close button for mobile -->
             <div class="sidebar-heading d-flex justify-content-between align-items-center">
                 <div class="text-center">
-                <img src="img/secondary_logo.png" alt="COMSA Logo" style="width: 200px;">
+                <img src="../img/tracker-logo2.png" alt="COMSA Logo" style="width: 200px;">
              </div>
                 <!-- Close button (visible only on mobile) -->
                 <button class="btn text-black d-lg-none p-0" id="sidebarClose" aria-label="Close menu">
@@ -139,16 +139,16 @@ if (!isset($_SESSION['student_number']) || $_SESSION['is_admin'] != 1) {
             
             <div class="list-group list-group-flush sidebar-links">
                 <!-- Navigation Items -->
-                <a href="admin_dashboard.php" class="list-group-item list-group-item-action">
+                <a href="admin/admin_dashboard.php" class="list-group-item list-group-item-action">
                     <i class="bi bi-speedometer2 me-2"></i> Dashboard
                 </a>
                 <a href="events.php" class="list-group-item list-group-item-action">
                     <i class="bi bi-calendar-week me-2"></i> Events
                 </a>
-                <a href="tasks.php" class="list-group-item list-group-item-action">
+                <a href="tasks.php" class="list-group-item list-group-item-action active">
                     <i class="bi bi-table me-2"></i> Tasks
                 </a>
-                <a href="users.php" class="list-group-item list-group-item-action active">
+                <a href="users.php" class="list-group-item list-group-item-action">
                     <i class="bi bi-person me-2"></i> Users
                 </a>
                 <a href="logout.php" class="list-group-item list-group-item-action">
@@ -173,7 +173,7 @@ if (!isset($_SESSION['student_number']) || $_SESSION['is_admin'] != 1) {
 
             <!-- Main Content Area -->
             <div class="container-fluid">
-                <h2 class="">Users</h2>
+                <h2 class="">Tasks</h2>
                 <p class="lead text-muted"></p>
                 <hr class="mb-4">
 

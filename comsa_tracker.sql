@@ -90,3 +90,6 @@ CREATE TABLE events (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Add enum type to the 'type' column in 'events' table
+ALTER TABLE `events`
+  MODIFY `type` enum('Off-Campus', 'On-Campus') NOT NULL;

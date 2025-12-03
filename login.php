@@ -2,44 +2,65 @@
 include('functions/config.php');
 session_start();
 
+$error_message = '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $student_number = htmlspecialchars(trim($_POST['student_number']));
-    $password = $_POST['password'];
+    
+    // 1. Input Validation
+    if (empty($_POST['student_number']) || empty($_POST['password'])) {
+        $error_message = "Please enter both student number and password.";
+    } else {
+        $student_number = htmlspecialchars(trim($_POST['student_number']));
+        $password = $_POST['password'];
 
-    // 1. Fetch user data, including the 'id' column
-    $stmt = $conn->prepare("SELECT id, student_number, name, email, role, type, is_admin, password FROM users WHERE student_number = ?");
-    $stmt->bind_param("s", $student_number);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
-            session_regenerate_id(true);
+        // 2. Fetch user data
+        $stmt = $conn->prepare("SELECT id, student_number, name, email, role, type, is_admin, password FROM users WHERE student_number = ?");
+        
+        if ($stmt === false) {
+            // Database preparation error (rare, but good to handle)
+            $error_message = "A system error occurred. Please try again later. (SQL Prepare)";
+        } else {
+            $stmt->bind_param("s", $student_number);
             
-            // Store necessary user information, including the new 'user_id'
-            $_SESSION['user_id'] = $user['id']; // <-- ADDED: Essential for fetching user-specific tasks
-            $_SESSION['student_number'] = $user['student_number'];
-            $_SESSION['name'] = $user['name'];
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['role'] = $user['role'];
-            $_SESSION['type'] = $user['type'];
-            $_SESSION['is_admin'] = $user['is_admin'];
-            $_SESSION['initiated'] = true;
+            if ($stmt->execute()) {
+                $result = $stmt->get_result();
 
-            if ($user['is_admin']) {
-                // Admin users go to the admin dashboard
-                header("Location: admin/admin_dashboard.php");
+                if ($result->num_rows === 1) {
+                    $user = $result->fetch_assoc();
+                    
+                    // 3. Password Verification
+                    if (password_verify($password, $user['password'])) {
+                        // Success: Start session and redirect
+                        session_regenerate_id(true);
+                        
+                        $_SESSION['user_id'] = $user['id'];
+                        $_SESSION['student_number'] = $user['student_number'];
+                        $_SESSION['name'] = $user['name'];
+                        $_SESSION['email'] = $user['email'];
+                        $_SESSION['role'] = $user['role'];
+                        $_SESSION['type'] = $user['type'];
+                        $_SESSION['is_admin'] = $user['is_admin'];
+                        $_SESSION['initiated'] = true;
+
+                        if ($user['is_admin']) {
+                            header("Location: admin/admin_dashboard.php");
+                        } else {
+                            header("Location: user_tasks.php");
+                        }
+                        exit();
+                    }
+                }
+                
+                // 4. Failed Login (Handle incorrect credentials securely)
+                $error_message = "Invalid student number or password.";
+                
             } else {
-                // Non-admin users (students) go directly to the task board
-                header("Location: user_tasks.php"); // <-- CHANGED: Directs to the task board
+                // Database execution error
+                $error_message = "A system error occurred. Please try again later. (SQL Execute)";
             }
-            exit();
+            $stmt->close();
         }
     }
-
-    // Display error if login fails
-    $error_message = "Invalid student number or password.";
 }
 ?>
 
@@ -51,6 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login | COMSA - TRACKER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-light d-flex align-items-center justify-content-center vh-100">
@@ -62,9 +84,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             
             <?php 
-            // Display error message if set
-            if (isset($error_message)) {
-                echo '<div class="alert alert-danger text-center" role="alert">' . $error_message . '</div>';
+            // Display error message with enhanced layout
+            if (!empty($error_message)) {
+                echo '
+                <div class="alert alert-danger d-flex align-items-center mb-4" role="alert">
+                    <i class="ri-alert-fill me-2 fs-5"></i> 
+                    <div>
+                        ' . htmlspecialchars($error_message) . '
+                    </div>
+                </div>
+                ';
             }
             ?>
             
@@ -83,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
                 
             <div class="text-center mt-3">
-               <p class="mb-0">Forgot your password? <a href="forgot_password.php" class="text-decoration-none comsa-text">Click Here</a></p>
+                <p class="mb-0">Forgot your password? <a href="forgot_password.php" class="text-decoration-none comsa-text">Click Here</a></p>
             </div>
         </div>
     </div>

@@ -433,7 +433,7 @@ if (isset($_SESSION['success_message'])) {
                 aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
-                        <form method="GET" action="../functions/delete_task.php">
+                        <form method="POST" action="../functions/delete_task.php">
                             <input type="hidden" name="id" id="delete-task-id">
                             <div class="modal-header text-dark">
                                 <h5 class="modal-title" id="deleteTaskModalLabel"><i class="ri-alert-line me-2"></i>

@@ -38,7 +38,8 @@ mysql -u root -p comsa_tracker < comsa_tracker.sql
 - Update `functions/config.php` with your database credentials if needed.
 
 ### 4. Configure email settings
-- Edit `functions/email_config.php` and set your SMTP credentials:
+- Add a file named `email_config.php` at `functions` folder  and set your SMTP credentials:
+
 ```
 define('MAIL_HOST', 'smtp.gmail.com');
 define('MAIL_USERNAME', 'your-email@gmail.com');

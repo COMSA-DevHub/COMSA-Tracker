@@ -144,6 +144,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         opacity: 1;
         transform: translateY(0);
     }
+
+    @media screen and (max-width: 576px) {
+        #page-content-wrapper {
+            padding: 20px;
+        }
+
+        .card {
+            padding: 20px !important;
+        }
+
+        .card img {
+            width: 150px !important;
+        }
+    }
+
+    #togglePassword:hover {
+        color: #000;
+        transition: 0.2s ease;
+    }
 </style>
 
 <body class="bg-light d-flex align-items-center justify-content-center vh-100">
@@ -151,17 +170,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div id="loading-screen">
         <div class="loader"></div>
     </div>
-    <div id="page-content-wrapper">
-        <div class="card shadow-lg border-0 p-4" style="width: 100%; max-width: 400px; border-radius: 16px;">
-            <div class="card-body">
-                <div class="text-center mb-4">
-                    <img src="img/tracker-logo2.png" alt="COMSA Logo" style="width: 200px;">
-                </div>
+    <div id="page-content-wrapper" class="w-100 d-flex justify-content-center">
+        <div class="card shadow-lg border-0 p-4 w-100" style="max-width: 500px; border-radius: 16px;">
+            <div class="text-center mb-4">
+                <img src="img/tracker-logo2.png" alt="COMSA Logo" style="width: 200px;">
+            </div>
 
-                <?php
-                // Display error message with enhanced layout
-                if (!empty($error_message)) {
-                    echo '
+            <?php
+            // Display error message with enhanced layout
+            if (!empty($error_message)) {
+                echo '
                 <div class="alert alert-danger d-flex align-items-center mb-4" role="alert">
                     <i class="ri-alert-fill me-2 fs-5"></i> 
                     <div>
@@ -169,31 +187,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                 ';
-                }
-                ?>
+            }
+            ?>
 
-                <form method="POST" action="">
-                    <div class="mb-3">
-                        <label for="student_number" class="form-label">Student Number</label>
-                        <input type="text" class="form-control" id="student_number" name="student_number" required
-                            placeholder="Enter your student number">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required
-                            placeholder="Enter your password">
-                    </div>
-
-                    <button type="submit" class="btn btn-comsa w-100 py-2">Login</button>
-                </form>
-
-                <div class="text-center mt-3">
-                    <p class="mb-0">Forgot your password? <a href="forgot_password.php"
-                            class="text-decoration-none comsa-text">Click Here</a></p>
+            <form method="POST" action="">
+                <div class="mb-3">
+                    <label for="student_number" class="form-label">Student Number</label>
+                    <input type="text" class="form-control" id="student_number" name="student_number" required
+                        placeholder="Enter your student number">
                 </div>
-            </div>
+
+                <div class="mb-3 position-relative">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control pe-5" id="password" name="password" required
+                        placeholder="Enter your password">
+                    <i class="ri-eye-off-line position-absolute" id="togglePassword" style="
+            right: 15px;
+            top: 75%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 20px;
+            color: #6c757d;
+       ">
+                    </i>
+                </div>
+                <button type="submit" class="btn btn-comsa w-100 py-2">Login</button>
+            </form>
         </div>
+    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -218,6 +239,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             };
         });
     </script>
+    <script>
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.type === "password" ? "text" : "password";
+            passwordInput.type = type;
+
+            togglePassword.classList.toggle("ri-eye-line");
+            togglePassword.classList.toggle("ri-eye-off-line");
+        });
+    </script>
+
 
 </body>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2025 at 10:16 AM
+-- Generation Time: Dec 05, 2025 at 06:09 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,11 +24,138 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `type` enum('Off-Campus','On-Campus') NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `due_date` date DEFAULT NULL,
+  `status` enum('Pending','Ongoing','Completed') DEFAULT 'Pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events_printed`
+--
+
+CREATE TABLE `events_printed` (
+  `id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `sas_f6` tinyint(1) DEFAULT 0,
+  `transmittal` tinyint(1) DEFAULT 0,
+  `invitation` tinyint(1) DEFAULT 0,
+  `endorsement` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events_signed`
+--
+
+CREATE TABLE `events_signed` (
+  `id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `sas_f6` tinyint(1) DEFAULT 0,
+  `transmittal` tinyint(1) DEFAULT 0,
+  `invitation` tinyint(1) DEFAULT 0,
+  `endorsement` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `participants`
+--
+
+CREATE TABLE `participants` (
+  `id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `name` varchar(150) NOT NULL,
+  `student_number` varchar(20) DEFAULT NULL,
+  `section` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `participant_checklist`
+--
+
+CREATE TABLE `participant_checklist` (
+  `id` int(11) NOT NULL,
+  `participant_id` int(11) NOT NULL,
+  `p_studid` tinyint(1) DEFAULT 0,
+  `p_parentid` tinyint(1) DEFAULT 0,
+  `p_waiver` tinyint(1) DEFAULT 0,
+  `p_cor` tinyint(1) DEFAULT 0,
+  `s_studid` tinyint(1) DEFAULT 0,
+  `s_parentid` tinyint(1) DEFAULT 0,
+  `s_waiver` tinyint(1) DEFAULT 0,
+  `s_cor` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `requirements_printed`
+--
+
+CREATE TABLE `requirements_printed` (
+  `id` int(11) NOT NULL,
+  `participant_id` int(11) NOT NULL,
+  `student_id` tinyint(1) NOT NULL DEFAULT 0,
+  `parent_id` tinyint(1) NOT NULL DEFAULT 0,
+  `waiver` tinyint(1) NOT NULL DEFAULT 0,
+  `cor` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `requirements_signed`
+--
+
+CREATE TABLE `requirements_signed` (
+  `id` int(11) NOT NULL,
+  `participant_id` int(11) NOT NULL,
+  `student_id` tinyint(1) NOT NULL DEFAULT 0,
+  `parent_id` tinyint(1) NOT NULL DEFAULT 0,
+  `waiver` tinyint(1) NOT NULL DEFAULT 0,
+  `cor` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tasks`
+--
+
+CREATE TABLE `tasks` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `assigned_to_id` int(11) UNSIGNED NOT NULL,
+  `task_name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `notes` text DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `status` enum('not_started','in_progress','completed') NOT NULL DEFAULT 'not_started',
+  `link` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `student_number` varchar(50) NOT NULL,
@@ -40,15 +167,64 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `student_number`, `password`, `role`, `type`, `is_admin`, `created_at`) VALUES
-(1, 'admin', 'admin@gmail.com', '12345', '$2y$10$nu/1hLaEYWBovoz.YcpoFemctQFWwvK51uZEGb5Vr7RCWPOgTt0LK', '', 'CSIT', 1, '2025-11-10 07:56:37');
-
---
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `events_printed`
+--
+ALTER TABLE `events_printed`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `event_id` (`event_id`);
+
+--
+-- Indexes for table `events_signed`
+--
+ALTER TABLE `events_signed`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `event_id` (`event_id`);
+
+--
+-- Indexes for table `participants`
+--
+ALTER TABLE `participants`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `student_number` (`student_number`),
+  ADD UNIQUE KEY `unique_participant_event` (`event_id`,`student_number`);
+
+--
+-- Indexes for table `participant_checklist`
+--
+ALTER TABLE `participant_checklist`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `participant_id` (`participant_id`);
+
+--
+-- Indexes for table `requirements_printed`
+--
+ALTER TABLE `requirements_printed`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `participant_id` (`participant_id`);
+
+--
+-- Indexes for table `requirements_signed`
+--
+ALTER TABLE `requirements_signed`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `participant_id` (`participant_id`);
+
+--
+-- Indexes for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `assigned_to_id` (`assigned_to_id`);
 
 --
 -- Indexes for table `users`
@@ -63,76 +239,106 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `events_printed`
+--
+ALTER TABLE `events_printed`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `events_signed`
+--
+ALTER TABLE `events_signed`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `participants`
+--
+ALTER TABLE `participants`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `participant_checklist`
+--
+ALTER TABLE `participant_checklist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `requirements_printed`
+--
+ALTER TABLE `requirements_printed`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `requirements_signed`
+--
+ALTER TABLE `requirements_signed`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `events_printed`
+--
+ALTER TABLE `events_printed`
+  ADD CONSTRAINT `events_printed_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `events_signed`
+--
+ALTER TABLE `events_signed`
+  ADD CONSTRAINT `events_signed_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `participants`
+--
+ALTER TABLE `participants`
+  ADD CONSTRAINT `participants_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `participant_checklist`
+--
+ALTER TABLE `participant_checklist`
+  ADD CONSTRAINT `participant_checklist_ibfk_1` FOREIGN KEY (`participant_id`) REFERENCES `participants` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `requirements_printed`
+--
+ALTER TABLE `requirements_printed`
+  ADD CONSTRAINT `requirements_printed_ibfk_1` FOREIGN KEY (`participant_id`) REFERENCES `participants` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `requirements_signed`
+--
+ALTER TABLE `requirements_signed`
+  ADD CONSTRAINT `requirements_signed_ibfk_1` FOREIGN KEY (`participant_id`) REFERENCES `participants` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`assigned_to_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
--- Create Events Table
-CREATE TABLE events (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  type VARCHAR(100) NOT NULL,
-  title VARCHAR(255),
-  sas_f6 BOOLEAN DEFAULT 0,
-  transmittal BOOLEAN DEFAULT 0,
-  invitation BOOLEAN DEFAULT 0,
-  endorsement BOOLEAN DEFAULT 0,
-  due_date DATE,
-  status ENUM('Pending', 'Ongoing', 'Completed') DEFAULT 'Pending',
-  printed BOOLEAN DEFAULT 0,
-  signed BOOLEAN DEFAULT 0,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Add enum type to the 'type' column in 'events' table
-ALTER TABLE `events`
-  MODIFY `type` enum('Off-Campus', 'On-Campus') NOT NULL;
-
--- Create Participants Table
-
-CREATE TABLE participants (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    event_id INT NOT NULL,
-    name VARCHAR(150) NOT NULL,
-    student_number VARCHAR(20) UNIQUE, -- If participants are students with unique IDs
-    section VARCHAR(50) NOT NULL,
-    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_participant_event (event_id, student_number) -- Prevents duplicate entries for the same event
-);
-
-CREATE TABLE `participant_checklist` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `participant_id` INT UNIQUE NOT NULL, 
-    
-    `p_studid` TINYINT(1) DEFAULT 0, 
-    `p_parentid` TINYINT(1) DEFAULT 0, 
-    `p_waiver` TINYINT(1) DEFAULT 0, 
-    `p_cor` TINYINT(1) DEFAULT 0, 
-    FOREIGN KEY (`participant_id`) REFERENCES `participants`(`id`) ON DELETE CASCADE
-);
-
--- Modify users.id to be UNSIGNED
-ALTER TABLE users
-MODIFY id INT(11) UNSIGNED AUTO_INCREMENT;
-
-
--- Create Tasks Table
-CREATE TABLE tasks (
-    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    assigned_to_id INT(11) UNSIGNED NOT NULL, 
-    task_name VARCHAR(255) NOT NULL,
-    description TEXT,
-    notes TEXT,
-    due_date DATE,
-    status ENUM('not_started', 'in_progress', 'completed') NOT NULL DEFAULT 'not_started',
-    link VARCHAR(255), 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (assigned_to_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE
-);

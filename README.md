@@ -63,5 +63,14 @@ define('MAIL_SENDER_EMAIL', 'your-email@gmail.com');
 - [PHPMailer](https://github.com/PHPMailer/PHPMailer)
 - [Bootstrap](https://getbootstrap.com), [Remixicon](https://remixicon.com) (via CDN)
 
+## Contact
+For questions, support, or collaboration, reach out to us:
+
+[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/tatakComsa)
+[![Instagram](https://img.shields.io/badge/Instagram-E4475C?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/comsa_ccs/)
+[![Gmail](https://img.shields.io/badge/Gmail-D54f42?style=for-the-badge&logo=gmail&logoColor=white)](computersciencecomsa@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/COMSA-DevHub)
+
+
 ## License
 This project is licensed under the [MIT License](LICENSE).

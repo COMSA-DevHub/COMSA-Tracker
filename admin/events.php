@@ -116,6 +116,7 @@ $result = $conn->query("
             width: 100%;
             /* Offset content to make space for the desktop sidebar */
             padding-top: 70px;
+            padding-bottom: 80px; 
             /* Padding for the fixed top header */
         }
 
@@ -802,6 +803,29 @@ $result = $conn->query("
             </div>
         </div>
     </div>
+     <nav class="mobile-nav-bar d-lg-none">
+        <a href="admin_dashboard.php"
+            class="btn rounded-3 d-flex align-items-center justify-content-center btn-icon"
+            title="Dashboard">
+            <i class="ri-dashboard-line fs-2"></i>
+        </a>
+        <a href="events.php"
+            class="btn btn-active rounded-3 d-flex align-items-center justify-content-center btn-icon" title="Events">
+            <i class="ri-calendar-schedule-line fs-2"></i>
+        </a>
+        <a href="tasks.php"
+            class="btn rounded-3 d-flex align-items-center justify-content-center btn-icon" title="Tasks">
+            <i class="ri-list-check-2 fs-2"></i>
+        </a>
+        <a href="users.php"
+            class="btn rounded-3 d-flex align-items-center justify-content-center btn-icon" title="Users">
+            <i class="ri-user-3-line fs-2"></i>
+        </a>
+        <a href="../logout.php"
+            class="btn rounded-3 d-flex align-items-center justify-content-center btn-icon" title="Logout">
+            <i class="ri-logout-box-r-line fs-2"></i>
+        </a>
+    </nav>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

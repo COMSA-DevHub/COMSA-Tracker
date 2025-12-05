@@ -116,6 +116,8 @@ $deadline_events = $conn->query("
             flex-grow: 1;
             width: 100%;
             padding-top: 70px;
+            padding-bottom: 80px; /* New padding for fixed bottom menu */
+            
             /* Initial state for page transition */
             opacity: 0;
             transform: translateY(20px);
@@ -131,11 +133,13 @@ $deadline_events = $conn->query("
         .top-header {
             width: 100%;
             padding-left: 0;
-            /* Adjusted for full screen view */
             z-index: 1000;
         }
 
-        /* --- LOADING SCREEN STYLES (NEW) --- */
+       
+
+
+        /* --- LOADING SCREEN STYLES --- */
         #loading-screen {
             position: fixed;
             top: 0;
@@ -143,7 +147,6 @@ $deadline_events = $conn->query("
             width: 100%;
             height: 100%;
             background-color: #ffffff;
-            /* White background */
             z-index: 9999;
             display: flex;
             justify-content: center;
@@ -217,57 +220,39 @@ $deadline_events = $conn->query("
         }
 
         /* --- UPDATED COLOR SCHEMES FOR ICONS --- */
-
-        /* Total Users - Purple */
         .stat-purple {
             background: linear-gradient(135deg, #7F00FF 0%, #E100FF 100%);
         }
-
         .stat-purple-text {
             color: #6f42c1;
         }
-
-        /* Total Tasks & Events - Orange */
         .stat-orange {
             background: linear-gradient(135deg, #FF9933 0%, #FF6600 100%);
         }
-
         .stat-orange-text {
             color: #fd7e14;
         }
-
-        /* Completed/Success - Green */
         .stat-success {
             background: linear-gradient(135deg, #09b003 0%, #007a00 100%);
         }
-
-        /* Ongoing/In Progress - Blue */
         .stat-progress {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         }
-
-        /* Pending/Awaiting Start - YELLOW GRADIENT (MODIFIED) */
         .stat-pending {
             background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            /* Gold to Orange */
         }
-
-        /* Deadlines/Urgent - Red */
         .stat-urgent {
             background: linear-gradient(135deg, #FF4B2B 0%, #FF416C 100%);
         }
-
 
         /* Table styling */
         .dashboard-table {
             border-radius: 8px;
             overflow: hidden;
         }
-
         .dashboard-table thead {
             background-color: #e9ecef;
         }
-
         .dashboard-table th {
             font-size: 0.75rem;
             font-weight: 600;
@@ -276,21 +261,17 @@ $deadline_events = $conn->query("
             color: #495057;
             padding: 1rem;
         }
-
         .dashboard-table td {
             padding: 1rem;
             vertical-align: middle;
         }
-
         .progress-thin {
             height: 6px;
         }
-
         .event-title {
             font-weight: 500;
             color: #212529;
         }
-
         .mini-badge {
             font-size: 0.7rem;
             padding: 0.25rem 0.5rem;
@@ -307,31 +288,31 @@ $deadline_events = $conn->query("
             <div class="container-xxl d-flex align-items-center justify-content-between">
                 <a class="navbar-brand fs-2 fw-bold d-flex align-items-center gap-2" href="#">
                     <img src="../img/tracker-logo.png" alt="" class="img-fluid" style="height:60px;">
-                    <span class="d-lg-inline">COMSA-TRACKER</span>
+                    <span>COMSA - TRACKER</span>
                 </a>
 
                 <div class="d-flex align-items-center gap-3 d-none d-lg-flex">
                     <a href="admin_dashboard.php"
                         class="btn btn-active rounded-3 d-flex align-items-center justify-content-center"
-                        style="width:50px; height:50px;">
+                        style="width:50px; height:50px;" title="Dashboard">
                         <i class="ri-dashboard-line fs-4"></i>
                     </a>
                     <a href="events.php"
                         class="btn btn-light rounded-3 d-flex align-items-center justify-content-center"
-                        style="width:50px; height:50px;">
+                        style="width:50px; height:50px;" title="Events">
                         <i class="ri-calendar-schedule-line fs-4"></i>
                     </a>
                     <a href="tasks.php" class="btn btn-light rounded-3 d-flex align-items-center justify-content-center"
-                        style="width:50px; height:50px;">
+                        style="width:50px; height:50px;" title="Tasks">
                         <i class="ri-list-check-2 fs-4"></i>
                     </a>
                     <a href="users.php" class="btn btn-light rounded-3 d-flex align-items-center justify-content-center"
-                        style="width:50px; height:50px;">
+                        style="width:50px; height:50px;" title="Users">
                         <i class="ri-user-3-line fs-4"></i>
                     </a>
                     <a href="../logout.php"
                         class="btn btn-light rounded-3 d-flex align-items-center justify-content-center"
-                        style="width:50px; height:50px;">
+                        style="width:50px; height:50px;" title="Logout">
                         <i class="ri-logout-box-r-line fs-4"></i>
                     </a>
                 </div>
@@ -339,14 +320,6 @@ $deadline_events = $conn->query("
         </nav>
 
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg fixed-top top-header">
-                <div class="container-fluid">
-                    <button class="btn btn-comsa d-lg-none" id="sidebarToggle" aria-label="Open menu">
-                        <i class="bi bi-list"></i>
-                    </button>
-                </div>
-            </nav>
-
             <main class="container-md py-5">
                 <div class="row mb-4">
                     <div class="col-12">
@@ -582,6 +555,29 @@ $deadline_events = $conn->query("
         </div>
     </div>
 
+     <nav class="mobile-nav-bar d-lg-none">
+        <a href="admin_dashboard.php"
+            class="btn btn-active rounded-3 d-flex align-items-center justify-content-center btn-icon"
+            title="Dashboard">
+            <i class="ri-dashboard-line fs-2"></i>
+        </a>
+        <a href="events.php"
+            class="btn rounded-3 d-flex align-items-center justify-content-center btn-icon" title="Events">
+            <i class="ri-calendar-schedule-line fs-2"></i>
+        </a>
+        <a href="tasks.php"
+            class="btn rounded-3 d-flex align-items-center justify-content-center btn-icon" title="Tasks">
+            <i class="ri-list-check-2 fs-2"></i>
+        </a>
+        <a href="users.php"
+            class="btn rounded-3 d-flex align-items-center justify-content-center btn-icon" title="Users">
+            <i class="ri-user-3-line fs-2"></i>
+        </a>
+        <a href="../logout.php"
+            class="btn rounded-3 d-flex align-items-center justify-content-center btn-icon" title="Logout">
+            <i class="ri-logout-box-r-line fs-2"></i>
+        </a>
+    </nav>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // JavaScript for Loading Screen and Page Animation

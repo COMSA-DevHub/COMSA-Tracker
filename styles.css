@@ -322,4 +322,33 @@ body{
         background: #f1f3f5;
     }
 
+
+ /* NEW: Mobile Fixed Icon Bar Styles */
+        .mobile-nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030; /* Above regular content, below fixed-top nav */
+            background-color: white;
+            border-top: 1px solid #dee2e6;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+        }
+
+        .mobile-nav-bar .btn-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.25rem;
+            color: #495057;
+            transition: color 0.2s, background-color 0.2s;
+        }
+
+        .mobile-nav-bar .btn-active-mobile {
+            color: #ffffff !important;
+            background-color: #09b003; /* Active color */
+        }
+        /* END NEW Styles */
     
